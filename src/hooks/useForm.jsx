@@ -48,7 +48,6 @@ export function useForm(steps){
         }]
         );
         }
-        console.log(responses)
   
     }
 

@@ -269,6 +269,7 @@ export const questions = [
                 label: 'Seu perfil será enviado via e-mail ou WhatsApp.',
                 categoria:'Dados',
                 type: 'information',
+                id:'info'
 
             },
             {

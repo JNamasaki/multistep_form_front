@@ -26,7 +26,15 @@ const mes = String(dataAtual.getMonth() + 1).padStart(2, '0'); // Obtém o mês 
 const ano = dataAtual.getFullYear();
 
 function isNull(item) {
-  return item == null;
+  if ('value' in item) {
+    // Loga o valor do item para debug (opcional)
+
+    // Verifica se item.value é nulo ou uma string vazia
+    return item.value == null || item.value == '';
+  } else {
+    // Se não tiver a propriedade 'value', retorna true (ou o que for apropriado para o seu caso)
+    return true;
+  }
 }
 const FormScreen = forwardRef(({ handleVerResultado }) => {
 
@@ -43,14 +51,19 @@ const FormScreen = forwardRef(({ handleVerResultado }) => {
 
 
 
-  const handlePontuacao = () => {
+  const handlePontuacao =  () => {
     const pontuacao = calcularPontuacao(responses);
-    setResultado(pontuacao);
+     setResultado(pontuacao);
+    console.log(resultado, pontuacao)
   };
 
   const handleFinalizar = async () => {
-    const [nome, cpf, telefone, email] = dados.map(item => item.value)
+    const dadosValidados = dados.some(isNull);
 
+    if (dados.length != 4) return alert("Preencha seus dados pra continuar!")
+    if(dadosValidados) return alert("Preencha seus dados pra continuar!")
+    
+    const [nome, cpf, telefone, email] = dados.map(item => item.value)
 
 
     try {
@@ -65,7 +78,8 @@ const FormScreen = forwardRef(({ handleVerResultado }) => {
           "nome": nome,
           "cpf": cpf,
           "telefone": telefone,
-          "email": email
+          "email": email,
+          "resultado": resultado
         }),
 
       ];
@@ -78,6 +92,7 @@ const FormScreen = forwardRef(({ handleVerResultado }) => {
       // Redirecione para a tela de resultado
       handleVerResultado();
     } catch (error) {
+      alert('Erro ao enviar pedido. Tente Novamente mais tarde!');
       console.error('Erro ao enviar requisições:', error);
     }
 

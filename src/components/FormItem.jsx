@@ -53,8 +53,7 @@ const FormItem = ({ item, index, onChange, }) => {
                 await schema.validateAt(id, { [id]: updatedValue }); // Validate individual field
                 setValidated(true);
             } catch (error) {
-                console.log(error.message)
-                // alert(error.message); // Exibir a mensagem de erro específica
+                alert(error.message); // Exibir a mensagem de erro específica
                 setValidated(false);
             }
         }
